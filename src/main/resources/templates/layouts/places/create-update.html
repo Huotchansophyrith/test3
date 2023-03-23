@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <title>My Advanced Page</title>
+    <link rel="stylesheet" th:href="@{/plugins/jquery-ui/jquery-ui.min.css}"/>
+    <link rel="stylesheet" th:href="@{/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!--    jquery should use new version-->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script th:src="@{/plugins/sweetalert2/sweetalert2.min.js}"></script>
+    <script th:src="@{/js/page/common.js}"></script>
+
+    <style>
+        /* CSS styles go here */
+        body {
+            background-color: #f5f5f5;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        h1 {
+            text-align: center;
+        }
+        p {
+            font-size: 20px;
+        }
+        .helpIcon{
+            position: absolute;
+            right: 100px;
+        }
+        .home1{
+            position: absolute;
+            left: 20px;
+        }
+        .about1{
+            position: absolute;
+            left: 100px;
+        }
+        .contact1{
+            position: absolute;
+            left: 180px;
+        }
+    </style>
+</head>
+
+<body>
+<!-- Navigation bar -->
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo center">Wolf GunBlood</a>
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li class="home1"><a href="/">Home</a></li>
+            <li class="about1"><a href="#">About</a></li>
+            <li class="contact1"><a href="#">Contact Us</a></li>
+            <li class="helpIcon">
+                <a href="#">
+                    <div style="display: flex">
+                        <i class="material-icons">help_outline</i>
+                        <span style="margin-left: 5px">Help</span>
+                    </div>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row">
+        <!--        <div class="col s12 m6">-->
+        <!--            <div class="card">-->
+
+
+        <!--            </div>-->
+        <!--        </div>-->
+        <div class="col s12 m6">
+            <!--            <form   >-->
+            <form id="formData" method="post" th:action="@{/places/add}">
+                <div class="input-field">
+                    <input id="placeName" type="text" class="validate">
+                    <label for="placeNAme">Place Name</label>
+                </div>
+                <div class="input-field">
+                    <input id="province1" type="text" class="validate">
+                    <label for="province1">Province</label>
+                </div>
+                <div class="input-field">
+                    <input id="history" type="text" class="validate">
+                    <label for="history">History</label>
+                </div>
+                <div class="input-field">
+                        <div class="form-group">
+                            <input type="file" name="img" id="img" class="form-control-file">
+                        </div>
+                </div>
+            </form>
+
+
+
+<!--            <div class="input-field">-->
+<!--                <input id="img" type="file" accept="image/png, image/jpeg" class="validate">-->
+<!--&lt;!&ndash;                <label for="img">img</label>&ndash;&gt;-->
+<!--            </div>-->
+
+
+            <button class="btn waves-effect waves-light" id="subm">Submit
+                <i class="material-icons right"></i>
+            </button>
+            <!--            </form>-->
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    $('#subm').click(function () {
+        let placeName = $('#placeName').val();
+        let province1 = $('#province1').val();
+        let history = $('#history').val();
+        var file = $('#img')[0].files[0];
+        console.log(file);
+
+        let data = {
+            "placeName":placeName,
+            "province1":province1,
+            "history":history,
+            "img":file
+            // "email":"email@emal.com"
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "/api/v1/places",
+            enctype: "multipart/form-data",
+            data: data,
+            contentType:false,
+            dataType: "json",
+            complete: function (dataRes) {
+                console.log(dataRes);
+
+                if(dataRes.responseJSON.statusCode === 200){
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Place has been created',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => $(location).attr('href', "/places/list"))
+                    // window.location = "/places/list";
+                } else {
+                    toastAlertInfo(dataRes.responseJSON.message);
+                }
+            }
+        });
+
+
+
+    })
+
+</script>
+
+</body>
+
+</html>

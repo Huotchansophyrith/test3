@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <title>My Advanced Page</title>
+    <link rel="stylesheet" th:href="@{/plugins/jquery-ui/jquery-ui.min.css}"/>
+    <link rel="stylesheet" th:href="@{/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/jquery-ui/jquery-ui.min.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!--    jquery should use new version-->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script th:src="@{/plugins/sweetalert2/sweetalert2.min.js}"></script>
+    <script th:src="@{/js/page/common.js}"></script>
+    <style>
+        /* CSS styles go here */
+        body {
+            background-color: #f5f5f5;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        h1 {
+            text-align: center;
+        }
+        p {
+            font-size: 20px;
+        }
+        .card-image{
+            position: relative;
+            top: 30px;
+            height: 300px;
+        }
+        .helpIcon{
+            position: absolute;
+            right: 100px;
+        }
+        .home1{
+            position: absolute;
+            left: 20px;
+        }
+        .about1{
+            position: absolute;
+            left: 100px;
+        }
+        .contact1{
+            position: absolute;
+            left: 180px;
+        }
+
+
+    </style>
+</head>
+<body>
+<!-- Navigation bar -->
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo center">Wolf GunBlood</a>
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li class="home1"><a href="/">Home</a></li>
+            <li class="about1"><a href="#">About</a></li>
+            <li class="contact1"><a href="#">Contact Us</a></li>
+
+            <li class="helpIcon">
+                <a href="#">
+                    <div style="display: flex">
+                        <i class="material-icons">help_outline</i>
+                        <span style="margin-left: 5px">Help</span>
+                    </div>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col s12 m6">
+            <div class="card">
+
+                <div class="card-image">
+                    <img src="/img/Register.webp" alt="An image">
+                    <span class="card-title">Card Title</span>
+                </div>
+
+            </div>
+        </div>
+        <div class="col s12 m6">
+            <!--            <form>-->
+
+            <div class="input-field">
+                <input id="id" type="text" class="validate" th:value="${user.id}" hidden>
+                <input id="name" type="text" class="validate" th:value="${user.username}">
+                <label for="name">User Name</label>
+            </div>
+            <div class="input-field">
+                <input id="password" type="text" class="validate" th:value="${user.password}">
+                <label for="password">Password</label>
+
+            </div>
+            <div class="input-field">
+                <input id="cfpassword" type="text" class="validate" th:value="${user.password}" >
+                <label for="cfpassword">Confirm Password</label>
+            </div>
+            <div class="input-field">
+                <input id="email" type="email" class="validate" th:value="${user.email}">
+                <label for="email">Email</label>
+            </div>
+            <div class="input-field">
+                <input id="tel" type="email" class="validate" th:value="${user.tel}">
+                <label for="tel">Tel</label>
+            </div>
+
+            <button class="btn waves-effect waves-light" id="update">Update
+                <i class="material-icons right"></i>
+            </button>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+
+
+
+
+    $('#update').click(function () {
+        let id = $('#id').val();
+        let name = $('#name').val();
+        let password = $('#password').val();
+        let cfpassword = $('#cfpassword').val();
+        let email = $('#email').val();
+        let tel = $('#tel').val();
+
+
+
+
+        if(password !== cfpassword){
+            Swal.fire({
+                icon: 'info',
+                title: 'Password does not match',
+            })
+            $('#cfpassword').focus();
+            return  ;
+        }
+
+        let data = {
+            "id": id,
+            "username":name,
+            "password":password,
+            "email":email,
+            "tel":tel
+            // "email":"email@emal.com"
+        }
+
+        $.ajax({
+            type: "PUT",
+            url: "/api/v1/users",
+            data: JSON.stringify(data && "" === data ? {} : data),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            complete: function (dataRes) {
+
+                if(dataRes.responseJSON.statusCode === 200){
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'User updated',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => $(location).attr('href', "/users/list"))
+                    // window.location = "/places/list";
+                } else {
+                    toastAlertInfo(dataRes.responseJSON.message);
+                }
+            }
+        });
+
+
+    })
+
+</script>
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+    //TODO update by passing value to textfield
+
+    let user = /*[[${user}]]*/ 'user';    // get "user" from  "model.addAttribute("user", user);"
+    /*]]>*/
+</script>
+
+
+
+</body>
+</html>

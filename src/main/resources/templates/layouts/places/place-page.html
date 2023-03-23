@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+    <title>My Advanced Page</title>
+    <link rel="stylesheet" th:href="@{/plugins/jquery-ui/jquery-ui.min.css}"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css}">
+    <link rel="stylesheet" th:href="@{/plugins/jquery-ui/jquery-ui.min.css}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!--    jquery should use new version-->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script th:src="@{/plugins/sweetalert2/sweetalert2.min.js}"></script>
+    <script th:src="@{/js/page/common.js}"></script>
+    <style>
+        /* CSS styles go here */
+        body {
+            background-color: #f5f5f5;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        h1 {
+            text-align: center;
+        }
+        p {
+            font-size: 20px;
+        }
+        .card-image{
+            position: relative;
+            top: 30px;
+            height: 300px;
+        }
+        .helpIcon{
+            position: absolute;
+            right: 100px;
+        }
+        .home1{
+            position: absolute;
+            left: 20px;
+        }
+        .about1{
+            position: absolute;
+            left: 100px;
+        }
+        .contact1{
+            position: absolute;
+            left: 180px;
+        }
+        #photo12{
+            margin-left: 100px;
+            margin-right: 100px;
+
+        ;
+        }
+
+        #h1h{
+
+            margin-left: 100px;
+        }
+        #zzzz{
+            margin-left: 100px;
+            margin-right: 100px;
+        }
+
+
+    </style>
+</head>
+<body>
+<!-- Navigation bar -->
+<nav>
+    <div class="nav-wrapper">
+        <a href="#" class="brand-logo center">Wolf GunBlood</a>
+        <ul id="nav-mobile" class="left hide-on-med-and-down">
+            <li class="home1"><a href="/">Home</a></li>
+            <li class="about1"><a href="#">About</a></li>
+            <li class="contact1"><a href="#">Contact Us</a></li>
+
+            <li class="helpIcon">
+                <a href="#">
+                    <div style="display: flex">
+                        <i class="material-icons">help_outline</i>
+                        <span style="margin-left: 5px">Help</span>
+                    </div>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+<div>
+    <h3 id="h1h" th:text="${places.placeName}"></h3>
+    <!--  <h3 id="h1h" th:text="${places.placeName + ' : Standard Ride'}"></h3> -->
+</div>
+
+<div class="row"  id="zzzz">
+    <div class="col-md-8" style="padding: 2px">
+        <img src="https://c4.wallpaperflare.com/wallpaper/504/77/190/angkor-wat-cambodia-historic-ruins-architecture-hd-wallpaper-preview.jpg" style="width: 100%;object-fit: cover;">
+    </div>
+    <div class="col-md-4" style="padding: 2px; " >
+        <div class="row" style="height: 100%">
+            <div class="row m-0 p-0">
+                <div class="col-md-12" style="height: 100%">
+                    <img src="https://c1.wallpaperflare.com/preview/169/713/196/siem-reap-summer-light.jpg" style="width: 100%; height:100%; object-fit: cover;">
+                </div>
+            </div>
+            <div class="row d-flex justify-content-between image1" style="padding-top: 2px">
+                <div class="col-md-6">
+                    <img src="https://c1.wallpaperflare.com/preview/271/875/672/ta-prohm-cambodia-angkor-wat.jpg" style="width: 100%; height: 100%; object-fit: cover;">
+                </div>
+                <div class="col-md-6">
+                    <img src="https://c4.wallpaperflare.com/wallpaper/575/30/410/city-ruins-sanctuary-temple-wallpaper-preview.jpg" style="width: 100%;  height: 100%; object-fit: cover;">
+                </div>
+            </div>
+        </div>
+
+<!--       // .col-md-12*2 shortcut making 2 div-->
+    </div>
+</div>
+
+
+<div>
+    <p id="h1h" th:text="${places.history}"></p>
+
+</div>
+
+
+<!--<div>-->
+<!--    <output id="id" type="text" class="validate" th:value="${places.id}" hidden>-->
+<!--        <output id="placeName" type="text" class="validate" th:value="${places.placeName}">-->
+<!--</div>-->
+
+<!--<div class="row" id="photo12">-->
+<!--    <div class="col-md-8" style="padding: 2px">-->
+<!--        <img src="https://c4.wallpaperflare.com/wallpaper/504/77/190/angkor-wat-cambodia-historic-ruins-architecture-hd-wallpaper-preview.jpg" style="width: 100%;object-fit: cover;">-->
+<!--    </div>-->
+<!--    <div class="col-md-4" style="padding: 1px">-->
+<!--        <img src="https://c4.wallpaperflare.com/wallpaper/131/758/474/angkor-wat-cambodia-hinduism-temple-hd-wallpaper-preview.jpg" style="width: 100%;object-fit: cover;">-->
+
+<!--        <div class="col-md-12" style="padding: 2px">-->
+<!--            <img src="https://c4.wallpaperflare.com/wallpaper/504/77/190/angkor-wat-cambodia-historic-ruins-architecture-hd-wallpaper-preview.jpg" style="width: 100%;object-fit: cover;">-->
+<!--        </div>-->
+
+<!--    </div>-->
+
+
+<!--        &lt;!&ndash;       // .col-md-12*2 shortcut making 2 div&ndash;&gt;-->
+<!--    </div>-->
+<!--</div>-->
+
+
+<script type="text/javascript" th:inline="javascript">
+    /*<![CDATA[*/
+
+    //TODO update by passing value to textfield
+
+    let places = /*[[${user}]]*/ 'places';    // get "user" from  "model.addAttribute("user", user);"
+    /*]]>*/
+</script>
+
+
+
+
+</body>
+
+
+
+<!--<div class="row ">-->
+
+<!--    <div class="col-md-6" style="padding: 2px">-->
+<!--        <img src="https://cdn.getyourguide.com/img/tour/62e3ad5535eed.jpeg/98.jpg" style="width: 100%;object-fit: cover;">-->
+<!--    </div>-->
+
+<!--    <div class="col-md-6" style="padding: 2px">-->
+<!--        <img src="https://cdn.getyourguide.com/img/tour/62e3ad5535eed.jpeg/98.jpg" style="width: 100%;object-fit: cover;">-->
+<!--        <div>-->
+
+<!--</div>-->
+
+
+
+
+<!--            <div class="row d-flex justify-content-between image1" style="padding-top: 5px">-->
+<!--                <div class="col-md-6">-->
+<!--                    <img src="https://cdn.getyourguide.com/img/tour/62e3ad5535eed.jpeg/98.jpg" style="width: 100%; height: 100%; object-fit: cover;">-->
+<!--                </div>-->
+<!--                <div class="col-md-6">-->
+<!--                    <img src="https://cdn.getyourguide.com/img/tour/62e3ad5535eed.jpeg/98.jpg" style="width: 100%;  height: 100%; object-fit: cover;">-->
+<!--                </div>-->
+<!--            </div>-->
+
+
+        <!--       // .col-md-12*2 shortcut making 2 div-->
+
+
+<!--  <h3 id="h1h" th:text="${places.placeName + ' : Standard Ride'}"></h3> -->
